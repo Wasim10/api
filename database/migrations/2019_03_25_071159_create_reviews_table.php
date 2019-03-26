@@ -15,6 +15,13 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->bigIncrements('id');
+            
+            $table->bigInteger('product_id')->unsigned();  //both table ID Should be used as  a Big
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->string('customer');
+            $table->text('review');
+            $table->integer('star');
+
             $table->timestamps();
         });
     }
@@ -26,6 +33,7 @@ class CreateReviewsTable extends Migration
      */
     public function down()
     {
+
         Schema::dropIfExists('reviews');
     }
 }
