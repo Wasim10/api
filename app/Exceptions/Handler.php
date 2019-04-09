@@ -49,18 +49,26 @@ class Handler extends ExceptionHandler
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
-    {
-       if($request->expectJson()){  
+    {  
+
+        /*
+         if($request->expectsJson()){  
+
+       return $this->apiException($request, $exception);
+    }
+        */
+       if($request->expectsJson()){  
 
         if($exception instanceof ModelNotFoundException){
             return response()->json([
+
                 'errors' => 'Product Model Not Found'
                  ], Response::HTTP_NOT_FOUND);
         }
 
         if($exception instanceof NotFoundHttpException)
 
-               
+               {
             return response()->json([
                 'errors' => 'INcorrent Route, Not Found'
                  ], Response::HTTP_NOT_FOUND);
@@ -68,6 +76,7 @@ class Handler extends ExceptionHandler
 
         }
     }
+    
       //  dd($exception); 
         return parent::render($request, $exception);
     }
